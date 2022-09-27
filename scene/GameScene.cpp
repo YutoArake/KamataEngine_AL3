@@ -22,11 +22,11 @@ void GameScene::Initialize() {
 	// ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("mario.jpg");
 
-	// スプライトの生成
-	sprite_ = Sprite::Create(textureHandle_, { 100, 50 });
-
 	// 3Dモデルの生成
 	model_ = Model::Create();
+
+	// スプライトの生成
+	sprite_ = Sprite::Create(textureHandle_, { 100, 50 });
 
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();

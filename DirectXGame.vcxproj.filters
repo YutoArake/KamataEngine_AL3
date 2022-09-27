@@ -49,6 +49,9 @@
     <Filter Include="ヘッダー ファイル\math">
       <UniqueIdentifier>{647f4977-924a-4954-923f-5619e5afc9a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\const">
+      <UniqueIdentifier>{d3a946ae-75c5-487e-a5a7-9521b3414e2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -67,13 +70,13 @@
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="MathMyFunc.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldTransform.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\math</Filter>
     </ClCompile>
     <ClCompile Include="ViewProjection.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\const</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldTransform.cpp">
+      <Filter>ソース ファイル\const</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,7 +162,7 @@
       <Filter>ヘッダー ファイル\3d</Filter>
     </ClInclude>
     <ClInclude Include="MathMyFunc.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

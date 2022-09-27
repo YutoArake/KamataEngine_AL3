@@ -1,18 +1,6 @@
-﻿  main.cpp
-  MathMyFunc.cpp
-  GameScene.cpp
+﻿  MathMyFunc.cpp
   ViewProjection.cpp
   WorldTransform.cpp
-C:\KamataEngine20220711\DirectXGame\MathMyFunc.cpp(43,27): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\KamataEngine20220711\DirectXGame\MathMyFunc.cpp(44,27): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\KamataEngine20220711\DirectXGame\MathMyFunc.cpp(45,24): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\KamataEngine20220711\DirectXGame\MathMyFunc.cpp(46,27): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\KamataEngine20220711\DirectXGame\MathMyFunc.cpp(55,27): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\KamataEngine20220711\DirectXGame\MathMyFunc.cpp(56,24): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\KamataEngine20220711\DirectXGame\MathMyFunc.cpp(57,27): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\KamataEngine20220711\DirectXGame\MathMyFunc.cpp(58,27): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\KamataEngine20220711\DirectXGame\MathMyFunc.cpp(67,27): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\KamataEngine20220711\DirectXGame\MathMyFunc.cpp(68,27): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\KamataEngine20220711\DirectXGame\MathMyFunc.cpp(69,24): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\KamataEngine20220711\DirectXGame\MathMyFunc.cpp(70,27): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+  main.cpp
+  GameScene.cpp
   DirectXGame.vcxproj -> C:\KamataEngine20220711\DirectXGame\x64\Debug\DirectXGame.exe
