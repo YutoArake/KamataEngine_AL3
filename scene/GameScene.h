@@ -11,6 +11,9 @@
 #include "WorldTransform.h"
 #include "DebugCamera.h"
 
+#include "MathMyFunc.h"
+using namespace MathMyFunc;
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -76,4 +79,5 @@ class GameScene {
 
 	// 値を表示したい変数
 	int32_t value_ = 0;
+
 };

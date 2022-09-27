@@ -36,13 +36,62 @@ void GameScene::Initialize() {
 	// デバックカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 
+	// X, Y, Z方向のスケーリングを設定
+	worldTransform_.scale_ = { 5.0f, 5.0f, 5.0f };
+	// スケーリング行列を宣言
+	Matrix4 matScale;
+
+	// スケーリング倍率を行列に設定する
+	GenerateScaleMatrix(worldTransform_.scale_, matScale);
+
+	// ワールドトランスフォームに単位行列を代入
+	GenerateIdentityMatrix(worldTransform_.matWorld_);
+	// スケール行列を掛ける
+	worldTransform_.matWorld_ *= matScale;
+
+	// X, Y, Z軸周りの回転角を設定
+	worldTransform_.rotation_ = { PI / 4, PI / 4, PI / 4 };
+	// 合成用回転行列を宣言
+	Matrix4 matRot;
+	// 各軸用回転行列を宣言
+	Matrix4 matRotX, matRotY, matRotZ;
+
+	// 回転行列の各要素を設定する
+	GenerateRotateXMatrix(worldTransform_.rotation_, matRotX);
+	GenerateRotateYMatrix(worldTransform_.rotation_, matRotY);
+	GenerateRotateZMatrix(worldTransform_.rotation_, matRotZ);
+
+	// 各軸の回転行列を合成
+	matRot = ((matRotZ *= matRotX) *= matRotY);
+
+	// 回転行列を掛ける
+	worldTransform_.matWorld_ *= matRot;
+
+	// X, Y, Z軸周りの平行移動を設定
+	worldTransform_.translation_ = { 10.0f, 10.0f, 10.0f };
+	// 平行移動行列を宣言
+	Matrix4 matTrans;
+
+	// 移動量を行列に設定する
+	GenerateTransformMatrix(worldTransform_.translation_, matTrans);
+
+	worldTransform_.matWorld_ *= matTrans;
+
+	// 行列の転送
+	worldTransform_.TransferMatrix();
+
+	// ライン描画が参照するビュープロジェクションを指定する(アドレス渡し)
+	PrimitiveDrawer::GetInstance()->SetViewProjection(&debugCamera_->GetViewProjection());
+
+#pragma region 軸
 	//軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
 	//軸方向表示が参照するビュープロジェクションを指定する（アドレス渡し）
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&debugCamera_->GetViewProjection());
 
-	// ライン描画が参照するビュープロジェクションを指定する(アドレス渡し)
-	PrimitiveDrawer::GetInstance()->SetViewProjection(&debugCamera_->GetViewProjection());
+#pragma endregion
+
+#pragma region 音
 
 	// サウンドデータの読み込み
 	// soundDataHandle_ = audio_->LoadWave("mokugyo.wav");
@@ -50,6 +99,7 @@ void GameScene::Initialize() {
 	// 音声再生
 	// audio_->PlayWave(soundDataHandle_);
 	// voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
+#pragma endregion
 }
 
 void GameScene::Update() {
@@ -71,7 +121,7 @@ void GameScene::Update() {
 	//}
 
 	// デバッグテキストの表示
-	debugText_->Print("kaizokuou ni oreha naru", 50.0f, 50.0f, 1.0f);
+	debugText_->Print("debug", 50.0f, 50.0f, 1.0f);
 	// 書式指定付き表示
 	debugText_->SetPos(50.0f, 70.0f);
 	debugText_->Printf("year:%d", 2003);
