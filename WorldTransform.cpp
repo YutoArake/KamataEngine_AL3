@@ -9,10 +9,10 @@ void WorldTransform::UpdateWorldTransform(WorldTransform& worldTransform, AffinM
 	GenerateTransformMatrix(worldTransform.translation_, mat.trans);
 
 	//回転行列の合成
-	mat.rot = MatrixCalculation(MatrixCalculation(mat.rotX, mat.rotZ), mat.rotY);
+	mat.rot = MatrixCalculation(MatrixCalculation(mat.rotZ, mat.rotX), mat.rotY);
 
 	//行列の合成
-	mat.mix = MatrixCalculation(MatrixCalculation(mat.scale, mat.rot), mat.trans);
+	mat.mix = MatrixCalculation(MatrixCalculation(mat.rot, mat.scale), mat.trans);
 
 	//行列の計算
 	//単位行列代入
