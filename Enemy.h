@@ -28,6 +28,15 @@ private:
 	// デスフラグ
 	bool isDead_ = false;
 
+	// 行動フェーズ
+	enum class Phase {
+		Approach,	// 接近する
+		Leave,		// 離脱する
+	};
+
+	// フェーズ
+	Phase phase_ = Phase::Approach;
+
 public:
 	/// <summary>
 	/// 初期化
@@ -56,4 +65,13 @@ public:
 	/// </summary>
 	void Move();
 
+	/// <summary>
+	/// 接近
+	/// </summary>
+	void Approach();
+
+	/// <summary>
+	/// 離脱
+	/// </summary>
+	void Leave();
 };
