@@ -2,6 +2,8 @@
 
 #include "Model.h"
 #include "WorldTransform.h"
+#include <memory>
+#include <list>
 
 #include "PlayerBullet.h"
 
@@ -23,7 +25,7 @@ private:
 	AffinMatrix mat;
 
 	// ’e
-	PlayerBullet* bullet_ = nullptr;
+	std::list<std::unique_ptr<PlayerBullet>> bullets_;
 
 public:
 	/// <summary>
