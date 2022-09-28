@@ -11,8 +11,7 @@
 #include "WorldTransform.h"
 #include "DebugCamera.h"
 
-#include "MathMyFunc.h"
-using namespace MathMyFunc;
+#include "Player.h"
 
 /// <summary>
 /// ゲームシーン
@@ -79,13 +78,13 @@ public:
 	// スプライト
 	Sprite* sprite_ = nullptr;
 
-	// ワールドトランスフォーム
-	WorldTransform worldTransforms_[kNumPartId];
 	// ビュープロジェクション
 	ViewProjection viewProjection_;
 
 	// デバックカメラ
 	DebugCamera* debugCamera_ = nullptr;
+	// デバッグカメラ有効
+	bool isDebugCameraActive_ = false;
 
 	// サウンドデータハンドル
 	uint32_t soundDataHandle_ = 0;
@@ -94,7 +93,9 @@ public:
 	uint32_t voiceHandle_ = 0;
 
 	// 値を表示したい変数
-	int32_t value_ = 0;
+	// int32_t value_ = 0;
 
-	AffinMatrix mat;
+	// 自キャラ
+	Player* player_ = nullptr;
+
 };

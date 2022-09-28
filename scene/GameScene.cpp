@@ -23,6 +23,7 @@ GameScene::GameScene() {}
 GameScene::~GameScene() {
 	delete sprite_;
 	delete model_;
+	delete player_;
 	delete debugCamera_;
 }
 
@@ -42,56 +43,16 @@ void GameScene::Initialize() {
 	// スプライトの生成
 	sprite_ = Sprite::Create(textureHandle_, { 100, 50 });
 
-#pragma region ワールドトランスフォームの初期化
-
-	//親(キャラクターの大元)
-	worldTransforms_[kRoot].Initialize();
-	//子(脊椎)
-	worldTransforms_[kSpine].Initialize();
-	worldTransforms_[kSpine].translation_ = { 0.0f, 0.0f, 0.0f };
-	worldTransforms_[kSpine].parent_ = &worldTransforms_[kRoot];
-
-	//子(上半身)
-	//胸
-	worldTransforms_[kChest].Initialize();
-	worldTransforms_[kChest].translation_ = { 0.0f, 0.0f, 0.0f };
-	worldTransforms_[kChest].parent_ = &worldTransforms_[kSpine];
-	//頭
-	worldTransforms_[kHead].Initialize();
-	worldTransforms_[kHead].translation_ = { 0.0f, 3.0f, 0.0f };
-	worldTransforms_[kHead].parent_ = &worldTransforms_[kChest];
-	//左腕
-	worldTransforms_[kArmL].Initialize();
-	worldTransforms_[kArmL].translation_ = { -3.0f, 0.0f, 0.0f };
-	worldTransforms_[kArmL].parent_ = &worldTransforms_[kChest];
-	//右腕
-	worldTransforms_[kArmR].Initialize();
-	worldTransforms_[kArmR].translation_ = { 3.0f, 0.0f, 0.0f };
-	worldTransforms_[kArmR].parent_ = &worldTransforms_[kChest];
-
-	//子(下半身)
-	//尻
-	worldTransforms_[kHip].Initialize();
-	worldTransforms_[kHip].translation_ = { 0.0f, -3.0f, 0.0f };
-	worldTransforms_[kHip].parent_ = &worldTransforms_[kSpine];
-	//左足
-	worldTransforms_[kLegL].Initialize();
-	worldTransforms_[kLegL].translation_ = { -3.0f, -3.0f, 0.0f };
-	worldTransforms_[kLegL].parent_ = &worldTransforms_[kHip];
-	//右足
-	worldTransforms_[kLegR].Initialize();
-	worldTransforms_[kLegR].translation_ = { 3.0f, -3.0f, 0.0f };
-	worldTransforms_[kLegR].parent_ = &worldTransforms_[kHip];
-#pragma endregion
-
 	// ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 
+	// 自キャラの生成
+	player_ = new Player();
+	// 自キャラの初期化
+	player_->Initialize(model_, textureHandle_);
+
 	// デバックカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
-
-	// ライン描画が参照するビュープロジェクションを指定する(アドレス渡し)
-	PrimitiveDrawer::GetInstance()->SetViewProjection(&debugCamera_->GetViewProjection());
 
 #pragma region 軸
 	//軸方向表示の表示を有効にする
@@ -113,66 +74,8 @@ void GameScene::Initialize() {
 }
 
 void GameScene::Update() {
-	// キャラクターの移動処理
-	{
-		// キャラクターの移動ベクトル
-		Vector3 move = { 0.0f, 0.0f, 0.0f };
-
-		// キャラクターの移動速さ
-		const float kPlayerSpeed = 0.1f;
-
-		// 左か右キーを押したらmoveを変化させる
-		if (input_->PushKey(DIK_RIGHTARROW)) {
-			move.x = kPlayerSpeed;
-		}
-		else if (input_->PushKey(DIK_LEFTARROW)) {
-			move.x = -kPlayerSpeed;
-		}
-
-		// 移動量を加算
-		worldTransforms_[kRoot].translation_ += move;
-
-		// デバッグテキスト
-		debugText_->SetPos(50.0f, 50.0f);
-		debugText_->Printf("pos : (%f, %f, %f)", worldTransforms_[0].translation_.x, worldTransforms_[0].translation_.y, worldTransforms_[0].translation_.z);
-	}
-
-	//キャラクターの回転処理
-	//上半身回転処理
-	{
-		//押した方向で移動ベクトルを変更
-		if (input_->PushKey(DIK_U)) {
-			//胸パーツのY軸周りの角度を減少
-			worldTransforms_[kChest].rotation_ -= {0.0f, PI / 180, 0.0f};
-		}
-		else if (input_->PushKey(DIK_I)) {
-			//胸パーツのY軸周りの角度を減少
-			worldTransforms_[kChest].rotation_ += {0.0f, PI / 180, 0.0f};
-		}
-	}
-	//下半身回転処理
-	{
-		//押した方向で移動ベクトルを変更
-		if (input_->PushKey(DIK_J)) {
-			//尻パーツのY軸周りの角度を減少
-			worldTransforms_[kHip].rotation_ -= {0.0f, PI / 180, 0.0f};
-		}
-		else if (input_->PushKey(DIK_K)) {
-			//尻パーツのY軸周りの角度を減少
-			worldTransforms_[kHip].rotation_ += {0.0f, PI / 180, 0.0f};
-		}
-	}
-
-	// 大元から順に更新していく
-	for (int i = 0; i < kNumPartId; i++) {
-		worldTransforms_[i].UpdateWorldTransform(worldTransforms_[i], mat);
-	}
-
-	// 視点移動処理
-	viewProjection_.UpdateViewProjention(input_, debugText_);
-
-	// デバックカメラの更新
-	debugCamera_->Update();
+	// 自キャラの更新
+	player_->Update();
 
 #pragma region スプライト
 	// スプライトの今の座標を取得
@@ -190,6 +93,29 @@ void GameScene::Update() {
 	//	// 音声停止
 	//	audio_->StopWave(voiceHandle_);
 	//}
+#pragma endregion
+
+#pragma region デバッグカメラ
+
+#ifdef _DEBUG
+	if (input_->TriggerKey(DIK_TAB)) {
+		isDebugCameraActive_ = !isDebugCameraActive_;
+	}
+#endif // _DEBUG
+
+	// デバックカメラの更新
+	{
+		if (isDebugCameraActive_) {
+			debugCamera_->Update();
+			viewProjection_.matView = debugCamera_->GetViewProjection().matView;
+			viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+			viewProjection_.TransferMatrix();
+		}
+		else {
+			viewProjection_.UpdateMatrix();
+			viewProjection_.TransferMatrix();
+		}
+	}
 #pragma endregion
 
 #pragma region デバッグテキスト
@@ -235,11 +161,9 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	// 3Dモデル描画
-	// 大元から順に描画していく
-	for (int i = 0; i < kNumPartId; i++) {
-		model_->Draw(worldTransforms_[i], viewProjection_, textureHandle_);
-	}
+
+	// 自キャラの描画
+	player_->Draw(viewProjection_);
 
 	// ライン描画が参照するビュープロジェクションを指定する(アドレス渡し)
 	// PrimitiveDrawer::GetInstance()->DrawLine3d();
