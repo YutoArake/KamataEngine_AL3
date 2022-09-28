@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "Player.h"
 #include <cassert>
 
 void Enemy::Initialize(Model* model) {
@@ -103,9 +104,27 @@ void Enemy::Leave() {
 }
 
 void Enemy::Fire() {
+	// NULLポインタチェック
+	assert(player_);
+
 	// 弾の速度
-	const float kBulletSpeed = -1.0f;
-	Vector3 velocity(0.0f, 0.0f, kBulletSpeed);
+	const float kBulletSpeed = 0.3f;
+
+	// 自キャラと敵キャラの座標を得る
+	Vector3 playerPos = player_->GetWorldPosition();
+	Vector3 enemyPos = GetWorldPosition();
+
+	// 差分ベクトルを求める
+	Vector3 difVector;
+	difVector.x = playerPos.x - enemyPos.x;
+	difVector.y = playerPos.y - enemyPos.y;
+	difVector.z = playerPos.z - enemyPos.z;
+
+	// ベクトルの正規化
+	Vector3 normal = MathUtility::Vector3Normalize(difVector);
+
+	// ベクトルの長さを速度に合わせる
+	Vector3 velocity(normal.x * kBulletSpeed, normal.y * kBulletSpeed, normal.z * kBulletSpeed);
 
 	// 速度ベクトルを自キャラに合わせて回転させる
 	velocity = MatrixCalculation(velocity, worldTransform_.matWorld_);
@@ -116,4 +135,15 @@ void Enemy::Fire() {
 
 	// 弾を登録する
 	bullets_.push_back(std::move(newBullet));
+}
+
+Vector3 Enemy::GetWorldPosition() {
+	// ワールド座標を入れる変数
+	Vector3 worldPos;
+	// ワールド行列の平行移動成分を取得（ワールド座標）
+	worldPos.x = worldTransform_.matWorld_.m[3][0];
+	worldPos.y = worldTransform_.matWorld_.m[3][1];
+	worldPos.z = worldTransform_.matWorld_.m[3][2];
+
+	return worldPos;
 }

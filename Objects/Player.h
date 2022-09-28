@@ -60,5 +60,10 @@ public:
 	/// 攻撃
 	/// </summary>
 	void Attack();
+
+	/// <summary>
+	/// 座標のゲッター
+	/// </summary>
+	Vector3 GetWorldPosition();
 };
 

@@ -54,6 +54,8 @@ void GameScene::Initialize() {
 	enemy_ = std::make_unique<Enemy>();
 	// 敵キャラの初期化
 	enemy_->Initialize(model_);
+	// 敵キャラに自キャラのアドレスを渡す
+	enemy_->SetPlayer(player_.get());
 
 	// デバックカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);

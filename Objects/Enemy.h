@@ -2,8 +2,13 @@
 
 #include "Model.h"
 #include "WorldTransform.h"
+#include <memory>
+#include <list>
 
 #include "EnemyBullet.h"
+
+// 自機クラスの前方宣言
+class Player;
 
 /// <summary>
 /// 敵
@@ -19,6 +24,9 @@ private:
 
 	// 行列計算用
 	AffinMatrix mat;
+
+	// 自キャラ
+	Player* player_ = nullptr;
 
 	// 行動フェーズ
 	enum class Phase {
@@ -96,4 +104,14 @@ public:
 	/// 弾発射
 	/// </summary>
 	void Fire();
+
+	/// <summary>
+	/// 自機クラスのセッター
+	/// </summary>
+	void SetPlayer(Player* player) { player_ = player; }
+
+	/// <summary>
+	/// 座標のゲッター
+	/// </summary>
+	Vector3 GetWorldPosition();
 };
