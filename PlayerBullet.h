@@ -3,9 +3,6 @@
 #include "Model.h"
 #include "WorldTransform.h"
 
-#include "MathMyFunc.h"
-using namespace MathMyFunc;
-
 /// <summary>
 /// Ž©ƒLƒƒƒ‰‚Ì’e
 /// </summary>

@@ -10,7 +10,7 @@
 /// <summary>
 /// Ž©ƒLƒƒƒ‰
 /// </summary>
-class Player{
+class Player {
 private:
 	Input* input_ = nullptr;
 	DebugText* debugText_ = nullptr;

@@ -23,7 +23,6 @@ GameScene::GameScene() {}
 GameScene::~GameScene() {
 	delete sprite_;
 	delete model_;
-	delete player_;
 	delete debugCamera_;
 }
 
@@ -47,9 +46,14 @@ void GameScene::Initialize() {
 	viewProjection_.Initialize();
 
 	// 自キャラの生成
-	player_ = new Player();
+	player_ = std::make_unique<Player>();
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
+
+	// 敵キャラの生成
+	enemy_ = std::make_unique<Enemy>();
+	// 敵キャラの初期化
+	enemy_->Initialize(model_);
 
 	// デバックカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
@@ -76,6 +80,9 @@ void GameScene::Initialize() {
 void GameScene::Update() {
 	// 自キャラの更新
 	player_->Update();
+
+	// 敵キャラの更新
+	enemy_->Update();
 
 #pragma region スプライト
 	// スプライトの今の座標を取得
@@ -164,6 +171,9 @@ void GameScene::Draw() {
 
 	// 自キャラの描画
 	player_->Draw(viewProjection_);
+
+	// 敵キャラの描画
+	enemy_->Draw(viewProjection_);
 
 	// ライン描画が参照するビュープロジェクションを指定する(アドレス渡し)
 	// PrimitiveDrawer::GetInstance()->DrawLine3d();

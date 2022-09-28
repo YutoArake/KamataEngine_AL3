@@ -12,6 +12,7 @@
 #include "DebugCamera.h"
 
 #include "Player.h"
+#include "Enemy.h"
 
 /// <summary>
 /// ゲームシーン
@@ -96,6 +97,8 @@ public:
 	// int32_t value_ = 0;
 
 	// 自キャラ
-	Player* player_ = nullptr;
+	std::unique_ptr<Player> player_;
 
+	// 敵
+	std::unique_ptr<Enemy> enemy_;
 };
