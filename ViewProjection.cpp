@@ -27,7 +27,7 @@ void ViewProjection::SetViewProjection() {
 	Initialize();
 }
 
-void ViewProjection::UpdateViewProjention(Input* input_, DebugText* debugText_, float viewAngle) {
+void ViewProjection::UpdateViewProjention(Input* input_, DebugText* debugText_) {
 	//視点移動処理
 	{
 		//視点の移動ベクトル
@@ -82,6 +82,9 @@ void ViewProjection::UpdateViewProjention(Input* input_, DebugText* debugText_, 
 
 	//上方向回転処理
 	{
+		// カメラ上方向の角度
+		// float viewAngle = 0.0f;
+
 		//上方向の回転速さ[ラジアン/frame]
 		//const float kUpRotSpeed = 0.05f;
 

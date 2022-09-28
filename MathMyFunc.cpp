@@ -1,4 +1,3 @@
-#include <random>
 #include "MathMyFunc.h"
 using namespace MathMyFunc;
 
@@ -124,19 +123,3 @@ Vector3 MathMyFunc::MatrixCalculation(Vector3 vector, Matrix4 mat) {
 
 	return result;
 }
-
-namespace MathRandom {
-#pragma region 乱数生成
-	//乱数シード生成器
-	std::random_device seed_gen;
-	//メルセンヌ・ツイスターの乱数エンジン
-	std::mt19937_64 engine(seed_gen());
-
-	//乱数範囲の設定(角度)
-	std::uniform_real_distribution<float> distAngle(0.0f, PI);
-
-	//乱数範囲の設定(座標)
-	std::uniform_real_distribution<float> distPos(-10.0f, 10.0f);
-#pragma endregion
-
-} // namespace MathRandom

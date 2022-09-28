@@ -76,5 +76,5 @@ struct ViewProjection {
 	/// <summary>
 	/// viewProjectionの各種移動処理
 	/// </summary>
-	void UpdateViewProjention(Input* input_, DebugText* debugText_, float viewAngle);
+	void UpdateViewProjention(Input* input_, DebugText* debugText_);
 };
