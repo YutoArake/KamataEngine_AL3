@@ -3,14 +3,16 @@
 #include "Model.h"
 #include "WorldTransform.h"
 
-#include "MathMyFunc.h"
-using namespace MathMyFunc;
+#include "PlayerBullet.h"
 
 /// <summary>
 /// 自キャラ
 /// </summary>
 class Player{
 private:
+	Input* input_ = nullptr;
+	DebugText* debugText_ = nullptr;
+
 	// ワールド変換データ
 	WorldTransform worldTransform_;
 	// モデル
@@ -18,10 +20,10 @@ private:
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 
-	Input* input_ = nullptr;
-	DebugText* debugText_ = nullptr;
-
 	AffinMatrix mat;
+
+	// 弾
+	PlayerBullet* bullet_ = nullptr;
 
 public:
 	/// <summary>
@@ -40,8 +42,21 @@ public:
 	/// 描画
 	/// </summary>
 	/// <param name="viewProjection">ビュープロジェクション（参照渡し）</param>
-	void Draw(ViewProjection viewProjection);
+	void Draw(const ViewProjection& viewProjection);
 
+	/// <summary>
+	/// 移動
+	/// </summary>
 	void Move();
+
+	/// <summary>
+	/// 旋回
+	/// </summary>
+	void Rotate();
+
+	/// <summary>
+	/// 攻撃
+	/// </summary>
+	void Attack();
 };
 
