@@ -13,6 +13,7 @@
 
 #include "Player.h"
 #include "Enemy.h"
+#include "Skydome.h"
 
 /// <summary>
 /// ゲームシーン
@@ -75,12 +76,21 @@ public:
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
-	// テクスチャハンドル
-	uint32_t textureHandle_ = 0;
+	
+	// 自キャラ
+	std::unique_ptr<Player> player_;
+	// 敵
+	std::unique_ptr<Enemy> enemy_;
+	// 天球
+	std::unique_ptr<Skydome> skydome_;
 
 	// 3Dモデル
 	Model* model_ = nullptr;
+	Model* modelSkydome_ = nullptr;
 	
+	// テクスチャハンドル
+	uint32_t textureHandle_ = 0;
+
 	// スプライト
 	Sprite* sprite_ = nullptr;
 
@@ -100,10 +110,4 @@ public:
 
 	// 値を表示したい変数
 	// int32_t value_ = 0;
-
-	// 自キャラ
-	std::unique_ptr<Player> player_;
-
-	// 敵
-	std::unique_ptr<Enemy> enemy_;
 };

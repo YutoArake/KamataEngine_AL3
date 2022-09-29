@@ -96,6 +96,9 @@
     <ClCompile Include="3d\WorldTransform.cpp">
       <Filter>ソース ファイル\const</Filter>
     </ClCompile>
+    <ClCompile Include="Skydome.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -196,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="math\MathMyFunc.h">
       <Filter>ヘッダー ファイル\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Skydome.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
