@@ -28,6 +28,9 @@ private:
 	// デスフラグ
 	bool isDead_ = false;
 
+	// 半径
+	float radius = 0.5f;
+
 public:
 	/// <summary>
 	/// 初期化
@@ -52,4 +55,17 @@ public:
 	/// デスフラグのゲッター
 	/// </summary>
 	bool IsDead() const { return isDead_; }
+
+	// 衝突を検出したら呼び出されるコールバック関数
+	void OnCollision();
+
+	/// <summary>
+	/// 座標のゲッター
+	/// </summary>
+	Vector3 GetWorldPosition();
+
+	/// <summary>
+	/// 半径
+	/// </summary>
+	float GetRadius() { return radius; }
 };

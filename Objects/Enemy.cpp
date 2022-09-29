@@ -15,7 +15,7 @@ void Enemy::Initialize(Model* model) {
 	worldTransform_.Initialize();
 
 	// 初期座標をセット
-	worldTransform_.translation_ = { 20.0f, 1.0f, 20.0f };
+	worldTransform_.translation_ = { 0.0f, 1.0f, 50.0f };
 	// 行列の計算
 	worldTransform_.UpdateWorldTransform(worldTransform_, mat);
 
@@ -146,4 +146,8 @@ Vector3 Enemy::GetWorldPosition() {
 	worldPos.z = worldTransform_.matWorld_.m[3][2];
 
 	return worldPos;
+}
+
+void Enemy::OnCollision() {
+
 }

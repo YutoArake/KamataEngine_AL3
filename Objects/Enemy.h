@@ -40,6 +40,9 @@ private:
 	// 速度
 	Vector3 velocity_;
 
+	// 半径
+	float radius = 0.5f;
+
 	// 弾
 	std::list<std::unique_ptr<EnemyBullet>> bullets_;
 
@@ -110,8 +113,19 @@ public:
 	/// </summary>
 	void SetPlayer(Player* player) { player_ = player; }
 
+	// 衝突を検出したら呼び出されるコールバック関数
+	void OnCollision();
+
 	/// <summary>
 	/// 座標のゲッター
 	/// </summary>
 	Vector3 GetWorldPosition();
+
+	/// <summary>
+	/// 半径
+	/// </summary>
+	float GetRadius() { return radius; }
+
+	// 弾リストを取得
+	const std::list<std::unique_ptr<EnemyBullet>>& GetBullets() { return bullets_; }
 };
