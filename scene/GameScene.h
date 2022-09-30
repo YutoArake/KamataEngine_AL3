@@ -14,6 +14,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Skydome.h"
+#include "RailCamera.h"
 
 /// <summary>
 /// ゲームシーン
@@ -51,6 +52,11 @@ class GameScene {
 	/// </summary>
 	void CheckAllCollisions();
 
+	/// <summary>
+	/// 敵弾を追加する
+	/// </summary>
+	void AddEnemyBullet(std::unique_ptr<EnemyBullet> enemyBullet);
+
 public:
 	// パーツID
 	enum PartId {
@@ -80,9 +86,14 @@ public:
 	// 自キャラ
 	std::unique_ptr<Player> player_;
 	// 敵
-	std::unique_ptr<Enemy> enemy_;
+	std::list<std::unique_ptr<Enemy>> enemys_;
+	std::list<std::unique_ptr<EnemyBullet>> enemyBullets_;
 	// 天球
 	std::unique_ptr<Skydome> skydome_;
+	// レールカメラ
+	std::unique_ptr<RailCamera> railCamera_;
+	// ゲームシーン
+	GameScene* gameScene_ = nullptr;
 
 	// 3Dモデル
 	Model* model_ = nullptr;

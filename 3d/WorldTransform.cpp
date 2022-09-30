@@ -24,7 +24,4 @@ void WorldTransform::UpdateWorldTransform(WorldTransform& worldTransform, AffinM
 		worldTransform.matWorld_ =
 			MatrixCalculation(worldTransform.matWorld_, worldTransform.parent_->matWorld_);
 	}
-
-	//s—ñ‚Ì“]‘—
-	worldTransform.TransferMatrix();
 }

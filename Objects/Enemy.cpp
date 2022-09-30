@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Player.h"
+#include "GameScene.h"
 #include <cassert>
 
 void Enemy::Initialize(Model* model) {
@@ -18,6 +19,8 @@ void Enemy::Initialize(Model* model) {
 	worldTransform_.translation_ = { 0.0f, 1.0f, 50.0f };
 	// s—ñ‚ÌŒvZ
 	worldTransform_.UpdateWorldTransform(worldTransform_, mat);
+	// “]‘—
+	worldTransform_.TransferMatrix();
 
 	// ‘¬“x‚Ìİ’è
 	velocity_ = { 0.0f, 0.0f, -0.1f };
@@ -28,31 +31,18 @@ void Enemy::Initialize(Model* model) {
 
 void Enemy::Update() {
 
-	// ƒfƒXƒtƒ‰ƒO‚Ì—§‚Á‚½’e‚ğíœ
-	bullets_.remove_if([](std::unique_ptr<EnemyBullet>& bullet) {
-		return bullet->IsDead();
-		});
-
 	// ˆÚ“®ˆ—
 	Move();
 
 	// s—ñ‚ÌŒvZ
 	worldTransform_.UpdateWorldTransform(worldTransform_, mat);
-
-	// ’e‚ğXV
-	for (std::unique_ptr<EnemyBullet>& bullet : bullets_) {
-		bullet->Update();
-	}
+	// “]‘—
+	worldTransform_.TransferMatrix();
 }
 
 void Enemy::Draw(const ViewProjection& viewProjection) {
 	// 3Dƒ‚ƒfƒ‹‚ğ•`‰æ
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
-
-	// ’e‚ğ•`‰æ
-	for (std::unique_ptr<EnemyBullet>& bullet : bullets_) {
-		bullet->Draw(viewProjection);
-	}
 }
 
 void Enemy::Move() {
@@ -134,7 +124,7 @@ void Enemy::Fire() {
 	newBullet->Initialize(model_, worldTransform_.translation_, velocity);
 
 	// ’e‚ğ“o˜^‚·‚é
-	bullets_.push_back(std::move(newBullet));
+	gameScene_->AddEnemyBullet(std::move(newBullet));
 }
 
 Vector3 Enemy::GetWorldPosition() {
@@ -149,5 +139,5 @@ Vector3 Enemy::GetWorldPosition() {
 }
 
 void Enemy::OnCollision() {
-
+	isDead_ = true;
 }

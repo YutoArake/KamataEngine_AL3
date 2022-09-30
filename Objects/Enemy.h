@@ -9,6 +9,8 @@
 
 // 自機クラスの前方宣言
 class Player;
+// GameSceneの前方宣言
+class GameScene;
 
 /// <summary>
 /// 敵
@@ -27,6 +29,8 @@ private:
 
 	// 自キャラ
 	Player* player_ = nullptr;
+	// ゲームシーン
+	GameScene* gameScene_ = nullptr;
 
 	// 行動フェーズ
 	enum class Phase {
@@ -44,7 +48,7 @@ private:
 	float radius = 0.5f;
 
 	// 弾
-	std::list<std::unique_ptr<EnemyBullet>> bullets_;
+	// std::list<std::unique_ptr<EnemyBullet>> bullets_;
 
 	// 寿命<frm>
 	static const int32_t kLifeTime = 60 * 5;
@@ -113,6 +117,11 @@ public:
 	/// </summary>
 	void SetPlayer(Player* player) { player_ = player; }
 
+	/// <summary>
+	/// ゲームシーンクラスのセッター
+	/// </summary>
+	void SetGameScene(GameScene* gameScene) { gameScene_ = gameScene; }
+
 	// 衝突を検出したら呼び出されるコールバック関数
 	void OnCollision();
 
@@ -127,5 +136,5 @@ public:
 	float GetRadius() { return radius; }
 
 	// 弾リストを取得
-	const std::list<std::unique_ptr<EnemyBullet>>& GetBullets() { return bullets_; }
+	// const std::list<std::unique_ptr<EnemyBullet>>& GetBullets() { return bullets_; }
 };

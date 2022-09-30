@@ -66,6 +66,11 @@ public:
 
 	// 衝突を検出したら呼び出されるコールバック関数
 	void OnCollision();
+
+	/// <summary>
+	/// ワールド変換のゲッター
+	/// </summary>
+	WorldTransform GetWorldTransform() { return worldTransform_; }
 	
 	/// <summary>
 	/// 座標のゲッター

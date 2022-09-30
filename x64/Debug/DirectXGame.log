@@ -1,2 +1,4 @@
-﻿  Skydome.cpp
+﻿  Enemy.cpp
+  main.cpp
+  GameScene.cpp
   DirectXGame.vcxproj -> C:\KamataEngine20220711\DirectXGame\x64\Debug\DirectXGame.exe

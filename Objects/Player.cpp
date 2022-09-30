@@ -91,6 +91,8 @@ void Player::Move() {
 
 	// XV
 	worldTransform_.UpdateWorldTransform(worldTransform_, mat);
+	// “]‘—
+	worldTransform_.TransferMatrix();
 }
 
 void Player::Rotate() {

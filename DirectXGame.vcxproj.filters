@@ -96,8 +96,11 @@
     <ClCompile Include="3d\WorldTransform.cpp">
       <Filter>ソース ファイル\const</Filter>
     </ClCompile>
-    <ClCompile Include="Skydome.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Objects\Skydome.cpp">
+      <Filter>ソース ファイル\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\RailCamera.cpp">
+      <Filter>ソース ファイル\objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,8 +203,11 @@
     <ClInclude Include="math\MathMyFunc.h">
       <Filter>ヘッダー ファイル\math</Filter>
     </ClInclude>
-    <ClInclude Include="Skydome.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Objects\RailCamera.h">
+      <Filter>ヘッダー ファイル\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Skydome.h">
+      <Filter>ヘッダー ファイル\objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

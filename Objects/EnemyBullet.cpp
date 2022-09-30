@@ -23,6 +23,8 @@ void EnemyBullet::Update() {
 
 	// ワールドトランスフォームの更新
 	worldTransform_.UpdateWorldTransform(worldTransform_, mat);
+	// 転送
+	worldTransform_.TransferMatrix();
 
 	// 時間経過でデス
 	if (--deathTimer_ <= 0) {
