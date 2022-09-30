@@ -23,6 +23,7 @@ GameScene::GameScene() {}
 GameScene::~GameScene() {
 	delete sprite_;
 	delete model_;
+	delete modelBullet_;
 	delete modelSkydome_;
 	delete debugCamera_;
 }
@@ -38,7 +39,8 @@ void GameScene::Initialize() {
 	textureHandle_ = TextureManager::Load("mario.jpg");
 
 	// 3Dモデルの生成
-	model_ = Model::Create();
+	model_ = Model::CreateFromOBJ("object", true);
+	modelBullet_ = Model::CreateFromOBJ("bullet", true);
 	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
 
 	// スプライトの生成
@@ -50,12 +52,12 @@ void GameScene::Initialize() {
 	// 自キャラの生成
 	player_ = std::make_unique<Player>();
 	// 自キャラの初期化
-	player_->Initialize(model_, textureHandle_);
+	player_->Initialize(model_, modelBullet_, textureHandle_);
 
 	// 敵キャラの生成
 	enemy_ = std::make_unique<Enemy>();
 	// 敵キャラの初期化
-	enemy_->Initialize(model_);
+	enemy_->Initialize(model_, modelBullet_);
 	// 敵キャラに自キャラのアドレスを渡す
 	enemy_->SetPlayer(player_.get());
 
@@ -69,9 +71,9 @@ void GameScene::Initialize() {
 
 #pragma region 軸
 	//軸方向表示の表示を有効にする
-	AxisIndicator::GetInstance()->SetVisible(true);
+	// AxisIndicator::GetInstance()->SetVisible(true);
 	//軸方向表示が参照するビュープロジェクションを指定する（アドレス渡し）
-	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
+	// AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 
 #pragma endregion
 
@@ -87,6 +89,12 @@ void GameScene::Initialize() {
 }
 
 void GameScene::Update() {
+
+	if (clear_ == true) {
+		debugText_->SetPos(600.0f, 50.0f);
+		debugText_->Printf("clear");
+	}
+	
 
 	// 自機、敵、弾の当たり判定
 	CheckAllCollisions();
@@ -192,7 +200,9 @@ void GameScene::Draw() {
 	player_->Draw(viewProjection_);
 
 	// 敵キャラの描画
-	enemy_->Draw(viewProjection_);
+	if (enemy_->IsDead() == false) {
+		enemy_->Draw(viewProjection_);
+	}
 
 	// ライン描画が参照するビュープロジェクションを指定する(アドレス渡し)
 	// PrimitiveDrawer::GetInstance()->DrawLine3d();
@@ -274,6 +284,9 @@ void GameScene::CheckAllCollisions() {
 			enemy_->OnCollision();
 			// 自弾の衝突時コールバック関数を呼び出す
 			bullet->OnCollision();
+
+			// クリア
+			clear_ = true;
 		}
 	}
 #pragma endregion

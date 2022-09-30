@@ -86,6 +86,7 @@ public:
 
 	// 3Dモデル
 	Model* model_ = nullptr;
+	Model* modelBullet_ = nullptr;
 	Model* modelSkydome_ = nullptr;
 	
 	// テクスチャハンドル
@@ -109,5 +110,5 @@ public:
 	uint32_t voiceHandle_ = 0;
 
 	// 値を表示したい変数
-	// int32_t value_ = 0;
+	int32_t clear_ = false;
 };

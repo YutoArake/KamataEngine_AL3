@@ -19,6 +19,7 @@ private:
 	WorldTransform worldTransform_;
 	// モデル
 	Model* model_ = nullptr;
+	Model* modelB_ = nullptr;
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 
@@ -65,7 +66,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="model">モデル</param>
-	void Initialize(Model* model);
+	void Initialize(Model* model, Model* modelB);
 
 	/// <summary>
 	/// 更新

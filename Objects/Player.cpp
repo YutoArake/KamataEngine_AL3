@@ -1,12 +1,13 @@
 #include "Player.h"
 #include <cassert>
 
-void Player::Initialize(Model* model, uint32_t textureHandle) {
+void Player::Initialize(Model* model, Model* modelB, uint32_t textureHandle) {
 	// NULLポインタチェック
 	assert(model);
 
 	// 引数で受け取ったのをメンバ変数に代入
 	model_ = model;
+	modelB_ = modelB;
 	textureHandle_ = textureHandle;
 
 	// シングルトンインスタンスを取得する
@@ -40,14 +41,14 @@ void Player::Update() {
 
 #pragma region デバッグテキスト
 	// player座標
-	debugText_->SetPos(50.0f, 50.0f);
-	debugText_->Printf("pos : (%f, %f, %f)", worldTransform_.translation_.x, worldTransform_.translation_.y, worldTransform_.translation_.z);
+	// debugText_->SetPos(50.0f, 50.0f);
+	// debugText_->Printf("pos : (%f, %f, %f)", worldTransform_.translation_.x, worldTransform_.translation_.y, worldTransform_.translation_.z);
 #pragma endregion
 }
 
 void Player::Draw(const ViewProjection& viewProjection) {
 	// 3Dモデルを描画
-	model_->Draw(worldTransform_, viewProjection, textureHandle_);
+	model_->Draw(worldTransform_, viewProjection);
 
 	// 弾を描画
 	for (std::unique_ptr<PlayerBullet>& bullet : bullets_) {
@@ -116,7 +117,7 @@ void Player::Attack() {
 
 		// 弾を生成し、初期化する
 		std::unique_ptr<PlayerBullet> newBullet = std::make_unique<PlayerBullet>();
-		newBullet->Initialize(model_, worldTransform_.translation_, velocity);
+		newBullet->Initialize(modelB_, worldTransform_.translation_, velocity);
 
 		// 弾を登録する
 		bullets_.push_back(std::move(newBullet));

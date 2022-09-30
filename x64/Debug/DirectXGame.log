@@ -1,2 +1,4 @@
-﻿  Skydome.cpp
+﻿  Enemy.cpp
+  GameScene.cpp
+C:\KamataEngine20220711\DirectXGame\scene\GameScene.cpp(93,16): warning C4805: '==': 演算中の 'int32_t' 型と 'bool' 型の混用は安全ではありません
   DirectXGame.vcxproj -> C:\KamataEngine20220711\DirectXGame\x64\Debug\DirectXGame.exe

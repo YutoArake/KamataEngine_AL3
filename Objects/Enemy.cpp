@@ -2,12 +2,13 @@
 #include "Player.h"
 #include <cassert>
 
-void Enemy::Initialize(Model* model) {
+void Enemy::Initialize(Model* model, Model* modelB) {
 	// NULLポインタチェック
 	assert(model);
 
 	// 引数で受け取ったのをメンバ変数に代入
 	model_ = model;
+	modelB_ = modelB;
 	// テクスチャ読み込み
 	textureHandle_ = TextureManager::Load("teki.png");
 
@@ -47,7 +48,7 @@ void Enemy::Update() {
 
 void Enemy::Draw(const ViewProjection& viewProjection) {
 	// 3Dモデルを描画
-	model_->Draw(worldTransform_, viewProjection, textureHandle_);
+	model_->Draw(worldTransform_, viewProjection);
 
 	// 弾を描画
 	for (std::unique_ptr<EnemyBullet>& bullet : bullets_) {
@@ -131,7 +132,7 @@ void Enemy::Fire() {
 
 	// 弾を生成し、初期化する
 	std::unique_ptr<EnemyBullet> newBullet = std::make_unique<EnemyBullet>();
-	newBullet->Initialize(model_, worldTransform_.translation_, velocity);
+	newBullet->Initialize(modelB_, worldTransform_.translation_, velocity);
 
 	// 弾を登録する
 	bullets_.push_back(std::move(newBullet));
@@ -149,5 +150,5 @@ Vector3 Enemy::GetWorldPosition() {
 }
 
 void Enemy::OnCollision() {
-
+	isDead_ = true;
 }
